@@ -1,0 +1,8 @@
+# Example config for GoMidiBinder
+target_app_in: "GrandMA_Input"
+target_app_out: "GrandMA_Output"
+
+devices:
+  - "Launchpad"
+  - "APC Mini"
+  - "X-Touch"
