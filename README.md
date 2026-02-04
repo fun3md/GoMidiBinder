@@ -81,32 +81,36 @@ devices:
 Holds the state of active connections to prevent double-connecting.
 # GoMidiBinder
 
-Kompaktes CLI-Tool zum Aggregieren mehrerer physischer MIDI-Controller und Weiterleitung an GrandMA.
+Description
+- Aggregates multiple physical MIDI controllers and forwards their events to GrandMA. Broadcasts GrandMA feedback to all connected devices.
 
-Kurz:
-- Konfiguriere die virtuellen GrandMA-Ports und die Geräte-Keywords in `config.example.yaml`.
-- Für schnelle Entwicklung/CI läuft das Projekt mit einem internen Stub (keine nativen Header nötig).
-
-Wichtige Dateien:
-- `config.example.yaml`: Beispielkonfiguration
-- `main.go`: Startpunkt
-- `DESIGN.md`: ausführliche Architektur- und Implementierungsbeschreibung
-
-Build (Stub / CI):
+Usage
+- Build and run (stub / CI-friendly):
 
 ```bash
 go build -o GoMidiBinder ./...
 ./GoMidiBinder -config config.yaml
 ```
 
-Native MIDI-Unterstützung:
-- Für echte MIDI I/O installiere die nativen Abhängigkeiten (z. B. `libasound2-dev` auf Linux) und baue mit dem Build-Tag `native`:
+Config
+- See `config.example.yaml` for `target_app_in`, `target_app_out` and `devices` (name substrings).
+
+Build
+- Stub / CI (no native headers required):
 
 ```bash
+go build -o GoMidiBinder ./...
+```
+
+- Native (with RtMidi C-bindings): install platform deps and build with the `native` tag:
+
+Linux example:
+```bash
+sudo apt install -y build-essential pkg-config libasound2-dev
 go build -tags native -o GoMidiBinder ./...
 ```
 
-Weitere Details und Designentscheidungen stehen in `DESIGN.md`.
+See `DESIGN.md` for the full architecture and implementation details.
 
     for name, outPort := range m.activeOutputs {
         outPort.Send(msg)
