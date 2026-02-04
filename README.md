@@ -112,6 +112,36 @@ go build -tags native -o GoMidiBinder ./...
 
 See `DESIGN.md` for the full architecture and implementation details.
 
+Quick test
+- Build and run the stub (CI-friendly):
+
+```bash
+go build -o GoMidiBinder ./...
+./GoMidiBinder -config config.yaml
+```
+
+- Expected: Watcher logs appear and program runs without native RtMidi headers.
+
+Integration (native RtMidi)
+- Install platform dependencies (example for Debian/Ubuntu):
+
+```bash
+sudo apt update
+sudo apt install -y build-essential pkg-config libasound2-dev
+go build -tags native -o GoMidiBinder ./...
+```
+
+- Start `GoMidiBinder` and connect `GrandMA_Input` / `GrandMA_Output` (loopMIDI on Windows or IAC on macOS). Verify event forwarding and LED feedback.
+
+Release & CI
+- A `goreleaser` config and GitHub Actions workflow are included; pushing a `v*` tag triggers release builds for Linux and Windows.
+
+Files of interest
+- `DESIGN.md` — full project description and architecture
+- `config.example.yaml` — example configuration
+- `MANUAL_TEST_PLAN.md` — manual/integration test steps and checklist
+
+
     for name, outPort := range m.activeOutputs {
         outPort.Send(msg)
     }
