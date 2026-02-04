@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    env:
+      GO111MODULE: 'on'
     strategy:
       fail-fast: false
       matrix:
@@ -34,6 +36,12 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install mingw -y || echo "Please ensure MinGW is available for CGO builds"
+
+      - name: Prepare Go modules
+        run: |
+          go version
+          go env
+          go mod download
 
       - name: Run goreleaser (tag releases)
         if: startsWith(github.ref, 'refs/tags/')
