@@ -1,0 +1,48 @@
+project_name: GoMidiBinder
+
+builds:
+  - id: linux-native
+    main: ./
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    tags:
+      - native
+    ldflags:
+      - -s -w
+
+  - id: windows-native
+    main: ./
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - windows
+    goarch:
+      - amd64
+    tags:
+      - native
+    ldflags:
+      - -s -w
+
+archives:
+  - id: archive
+    format: tar.gz
+    files:
+      - LICENSE
+    replacements:
+      darwin: macOS
+
+snapshot:
+  name_template: "{{ .Tag }}-snapshot"
+
+changelog:
+  use: git
+
+release:
+  github:
+    owner: fun3md
+    name: GoMidiBinder
