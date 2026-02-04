@@ -1,6 +1,6 @@
 module github.com/fun3md/GoMidiBinder
 
-go 1.24.2
+go 1.20
 
 require (
 	gitlab.com/gomidi/midi/v2 v2.3.18 // indirect
